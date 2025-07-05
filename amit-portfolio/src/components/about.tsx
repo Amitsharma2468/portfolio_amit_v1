@@ -1,41 +1,84 @@
-export function About() {
+import { Card, CardContent } from "@/components/ui/card"
+import { GraduationCap, Code, Heart } from "lucide-react"
+
+export default function About() {
   return (
-    <section id="about" className="py-20 bg-white dark:bg-gray-900">
-      <div className="container mx-auto px-4">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-4xl font-bold text-center text-gray-900 dark:text-white mb-12">About Me</h2>
+    <section id="about" className="py-20 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">About Me</h2>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            Get to know more about who I am, what I do, and what skills I have
+          </p>
+        </div>
 
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <div className="w-64 h-64 mx-auto bg-gradient-to-br from-blue-400 to-purple-500 rounded-full flex items-center justify-center">
-                <span className="text-6xl font-bold text-white">AKS</span>
-              </div>
-            </div>
-
-            <div className="space-y-6">
-              <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-                I'm a passionate Full Stack Developer with a strong foundation in computer science from Shahjalal
-                University of Science and Technology. I specialize in building modern web applications using
-                cutting-edge technologies.
+        <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div>
+            <h3 className="text-2xl font-bold text-gray-900 mb-6">Get to know me!</h3>
+            <div className="space-y-4 text-gray-600">
+              <p>
+                I'm a <strong>Software Engineering</strong> student at Shahjalal University of Science and Technology,
+                Sylhet, passionate about building innovative software solutions and learning cutting-edge technologies.
               </p>
-
-              <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-                My expertise spans across frontend frameworks like React and Next.js, backend technologies including
-                Node.js, and databases like PostgreSQL. I'm always eager to learn new technologies and take on
-                challenging projects.
+              <p>
+                I enjoy tackling complex problems and turning ideas into reality through code. My journey in software
+                development has been driven by curiosity and a desire to create meaningful applications that can make a
+                difference.
               </p>
-
-              <div className="grid grid-cols-2 gap-4 pt-6">
-                <div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Frontend</h3>
-                  <p className="text-gray-600 dark:text-gray-300">React, Next.js, TypeScript</p>
-                </div>
-                <div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Backend</h3>
-                  <p className="text-gray-600 dark:text-gray-300">Node.js, PostgreSQL, APIs</p>
-                </div>
-              </div>
+              <p>
+                I'm always eager to learn new technologies, collaborate with fellow developers, and contribute to
+                open-source projects. I believe in writing clean, efficient code and following best practices in
+                software development.
+              </p>
+              <p>
+                I'm <strong>open to job opportunities</strong> where I can contribute, learn and grow. If you have a
+                good opportunity that matches my skills and experience then don't hesitate to contact me.
+              </p>
             </div>
+          </div>
+
+          <div className="space-y-6">
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex items-center mb-4">
+                  <GraduationCap className="h-8 w-8 text-blue-600 mr-3" />
+                  <h4 className="text-xl font-semibold text-gray-900">Education</h4>
+                </div>
+                <p className="text-gray-600">
+                  Bachelor of Science in Software Engineering
+                  <br />
+                  Shahjalal University of Science and Technology
+                  <br />
+                  Sylhet, Bangladesh
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex items-center mb-4">
+                  <Code className="h-8 w-8 text-blue-600 mr-3" />
+                  <h4 className="text-xl font-semibold text-gray-900">Focus Areas</h4>
+                </div>
+                <p className="text-gray-600">
+                  Full-Stack Development, Web Applications, Database Design, Software Architecture, Problem Solving &
+                  Algorithm Design
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex items-center mb-4">
+                  <Heart className="h-8 w-8 text-blue-600 mr-3" />
+                  <h4 className="text-xl font-semibold text-gray-900">Interests</h4>
+                </div>
+                <p className="text-gray-600">
+                  Open Source Contribution, Competitive Programming, Technology Trends, Continuous Learning, Building
+                  Innovative Solutions
+                </p>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </div>
