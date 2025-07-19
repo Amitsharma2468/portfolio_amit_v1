@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Menu, X, User, Code2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Menu, X, Code2 } from "lucide-react";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -40,12 +39,6 @@ export function Navbar() {
                   {item.name}
                 </a>
               ))}
-              <a href="/admin">
-                <Button variant="outline" size="sm" className="ml-4">
-                  <User className="h-4 w-4 mr-2" />
-                  Admin
-                </Button>
-              </a>
             </div>
           </div>
 
@@ -79,12 +72,6 @@ export function Navbar() {
                 {item.name}
               </a>
             ))}
-            <a href="/admin" className="block px-3 py-2">
-              <Button variant="outline" size="sm">
-                <User className="h-4 w-4 mr-2" />
-                Admin
-              </Button>
-            </a>
           </div>
         </div>
       )}
