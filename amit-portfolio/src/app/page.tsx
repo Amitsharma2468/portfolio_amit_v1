@@ -1,54 +1,25 @@
-"use client"
-
-import { useState, useEffect } from "react"
-import Navbar from "@/components/navbar"
-import Hero from "@/components/hero"
-import About from "@/components/about"
-import Skills from "@/components/skills"
-import Projects from "@/components/projects"
-import Certificates from "@/components/certificates"
-import Contact from "@/components/contact"
-import Footer from "@/components/footer"
+import { Hero } from "@/components/sections/Hero";
+import { Skills } from "@/components/sections/Skills";
+import { Technologies } from "@/components/sections/Technologies";
+import { Projects } from "@/components/sections/Projects";
+import { Achievements } from "@/components/sections/Achievements";
+import { ProblemSolving } from "@/components/sections/ProblemSolving";
+import { Contact } from "@/components/sections/Contact";
+import { Navbar } from "@/components/layout/Navbar";
+import { Footer } from "@/components/layout/Footer";
 
 export default function Home() {
-  const [skills, setSkills] = useState([])
-  const [projects, setProjects] = useState([])
-  const [certificates, setCertificates] = useState([])
-
-  useEffect(() => {
-    fetchData()
-  }, [])
-
-  const fetchData = async () => {
-    try {
-      const [skillsRes, projectsRes, certificatesRes] = await Promise.all([
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/skills`),
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/projects`),
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/certificates`),
-      ])
-
-      const skillsData = await skillsRes.json()
-      const projectsData = await projectsRes.json()
-      const certificatesData = await certificatesRes.json()
-
-      setSkills(skillsData)
-      setProjects(projectsData)
-      setCertificates(certificatesData)
-    } catch (error) {
-      console.error("Error fetching data:", error)
-    }
-  }
-
   return (
-    <div className="min-h-screen bg-white">
+    <main className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
       <Navbar />
       <Hero />
-      <About />
-      <Skills skills={skills} />
-      <Projects projects={projects} />
-      <Certificates certificates={certificates} />
+      <Skills />
+      <Technologies />
+      <Projects />
+      <Achievements />
+      <ProblemSolving />
       <Contact />
       <Footer />
-    </div>
-  )
+    </main>
+  );
 }

@@ -1,45 +1,93 @@
-import { v2 as cloudinary } from "cloudinary"
+// Cloudinary configuration and utilities
+export const cloudinaryConfig = {
+  cloudName: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+  uploadPreset: process.env.NEXT_PUBLIC_IMG_UPLOAD_PRESET, // ✅ Fixed key
+};
+// Upload image to Cloudinary
+export const uploadToCloudinary = async (file: File): Promise<string> => {
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("upload_preset", cloudinaryConfig.uploadPreset!);
+  formData.append("folder", "portfolio");
 
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-})
-
-export async function uploadToCloudinary(file: File, folder = "portfolio") {
   try {
-    const bytes = await file.arrayBuffer()
-    const buffer = Buffer.from(bytes)
+    const response = await fetch(
+      `https://api.cloudinary.com/v1_1/${cloudinaryConfig.cloudName}/image/upload`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
 
-    return new Promise((resolve, reject) => {
-      cloudinary.uploader
-        .upload_stream(
-          {
-            folder,
-            resource_type: "auto",
-            transformation: [{ width: 1200, height: 800, crop: "limit" }, { quality: "auto" }, { format: "webp" }],
-          },
-          (error, result) => {
-            if (error) reject(error)
-            else resolve(result)
-          },
-        )
-        .end(buffer)
-    })
+    if (!response.ok) {
+      throw new Error("Upload failed");
+    }
+
+    const data = await response.json();
+    return data.secure_url;
   } catch (error) {
-    console.error("Error uploading to Cloudinary:", error)
-    throw error
+    console.error("Cloudinary upload error:", error);
+    throw new Error("Failed to upload image");
   }
-}
+};
 
-export async function deleteFromCloudinary(publicId: string) {
+// Get optimized image URL
+export const getOptimizedImageUrl = (
+  url: string,
+  options?: {
+    width?: number;
+    height?: number;
+    quality?: string;
+    format?: string;
+  }
+) => {
+  if (!url || !url.includes("cloudinary.com")) {
+    return url;
+  }
+
+  const {
+    width = 800,
+    height = 600,
+    quality = "auto",
+    format = "auto",
+  } = options || {};
+
+  // Insert transformation parameters into the Cloudinary URL
+  const transformations = `w_${width},h_${height},c_fill,q_${quality},f_${format}`;
+  return url.replace("/upload/", `/upload/${transformations}/`);
+};
+
+// Extract public ID from Cloudinary URL
+export const extractPublicId = (url: string): string => {
+  if (!url || !url.includes("cloudinary.com")) return url;
+
+  const parts = url.split("/");
+  const uploadIndex = parts.findIndex((part) => part === "upload");
+  if (uploadIndex === -1) return url;
+
+  // Get everything after the transformation parameters
+  const afterUpload = parts.slice(uploadIndex + 1);
+  const publicIdParts = afterUpload.filter(
+    (part) =>
+      !part.startsWith("w_") &&
+      !part.startsWith("h_") &&
+      !part.startsWith("c_") &&
+      !part.startsWith("q_") &&
+      !part.startsWith("f_")
+  );
+
+  return publicIdParts.join("/").replace(/\.[^/.]+$/, ""); // Remove file extension
+};
+
+// Delete image from Cloudinary
+export const deleteFromCloudinary = async (publicId: string): Promise<void> => {
   try {
-    const result = await cloudinary.uploader.destroy(publicId)
-    return result
+    // Note: Deletion requires server-side implementation with API secret
+    // For now, we'll just log the deletion attempt
+    console.log("Image deletion requested for:", publicId);
+    // In a production environment, you would call your backend API to delete the image
   } catch (error) {
-    console.error("Error deleting from Cloudinary:", error)
-    throw error
+    console.error("Cloudinary delete error:", error);
+    throw new Error("Failed to delete image");
   }
-}
-
-export default cloudinary
+};
