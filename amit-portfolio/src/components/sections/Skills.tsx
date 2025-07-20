@@ -39,56 +39,60 @@ export function Skills() {
     return acc;
   }, {} as Record<string, Skill[]>);
 
-  const levelColors = {
-    Beginner: "bg-green-500",
-    Intermediate: "bg-yellow-500",
-    Advanced: "bg-orange-500",
-    Expert: "bg-red-500",
+  const levelColors: Record<string, string> = {
+    Beginner: "bg-green-100 text-green-800",
+    Intermediate: "bg-yellow-100 text-yellow-800",
+    Advanced: "bg-orange-100 text-orange-800",
+    Expert: "bg-red-100 text-red-800",
   };
 
   if (loading) {
     return (
-      <section id="skills" className="py-20 px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-white mb-4">
-              Loading Skills...
-            </h2>
-          </div>
-        </div>
+      <section id="skills" className="py-20 px-4 bg-white text-center">
+        <h2 className="text-3xl font-semibold text-gray-800">
+          Loading Skills...
+        </h2>
       </section>
     );
   }
 
   return (
-    <section id="skills" className="py-20 px-4">
+    <section id="skills" className="py-20 px-4 bg-white">
       <div className="max-w-6xl mx-auto">
+        {/* Header */}
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-white mb-4">Skills</h2>
-          <p className="text-gray-300 text-lg">
+          <h2 className="text-4xl font-bold text-indigo-700 mb-4">Skills</h2>
+          <p className="text-gray-600 text-lg">
             My technical expertise and proficiency levels
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Skills Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {Object.entries(groupedSkills).map(([category, categorySkills]) => (
-            <Card key={category} className="bg-slate-800 border-purple-500/20">
+            <Card
+              key={category}
+              className="bg-white border border-gray-200 shadow-md rounded-xl hover:shadow-lg transition-all duration-300"
+            >
               <CardContent className="p-6">
-                <h3 className="text-xl font-semibold text-white mb-4">
+                <h3 className="text-xl font-semibold text-indigo-600 mb-4">
                   {category}
                 </h3>
-                <div className="space-y-3">
+
+                <div className="space-y-4">
                   {categorySkills.map((skill) => (
                     <div
                       key={skill._id}
                       className="flex items-center justify-between"
                     >
-                      <span className="text-gray-300">{skill.name}</span>
+                      <span className="text-gray-700 font-medium">
+                        {skill.name}
+                      </span>
                       <Badge
-                        variant="secondary"
                         className={`${
-                          levelColors[skill.level as keyof typeof levelColors]
-                        } text-white`}
+                          levelColors[skill.level] ||
+                          "bg-gray-200 text-gray-800"
+                        } px-3 py-1 text-sm font-semibold rounded-full`}
                       >
                         {skill.level}
                       </Badge>

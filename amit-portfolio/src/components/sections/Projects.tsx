@@ -39,36 +39,34 @@ export function Projects() {
 
   if (loading) {
     return (
-      <section id="projects" className="py-20 px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-white mb-4">
-              Loading Projects...
-            </h2>
-          </div>
+      <section id="projects" className="py-20 px-4 bg-white">
+        <div className="max-w-6xl mx-auto text-center">
+          <h2 className="text-3xl font-semibold text-gray-800">
+            Loading Projects...
+          </h2>
         </div>
       </section>
     );
   }
 
   return (
-    <section id="projects" className="py-20 px-4">
+    <section id="projects" className="py-20 px-4 bg-white">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-white mb-4">Projects</h2>
-          <p className="text-gray-300 text-lg">
+          <h2 className="text-4xl font-bold text-indigo-700 mb-4">Projects</h2>
+          <p className="text-gray-600 text-lg">
             Some of my recent work and personal projects
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((project) => (
             <Card
               key={project._id}
-              className="bg-slate-800 border-purple-500/20 hover:border-purple-500/40 transition-all duration-300"
+              className="border border-gray-200 shadow-md hover:shadow-lg transition-all rounded-xl overflow-hidden"
             >
               {project.image && (
-                <div className="aspect-video overflow-hidden rounded-t-lg">
+                <div className="aspect-video overflow-hidden">
                   <OptimizedImage
                     src={project.image}
                     alt={project.title}
@@ -78,19 +76,24 @@ export function Projects() {
                   />
                 </div>
               )}
-              <CardHeader>
-                <CardTitle className="text-white">{project.title}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-300 mb-4">{project.description}</p>
 
+              <CardHeader>
+                <CardTitle className="text-gray-800 text-xl font-semibold">
+                  {project.title}
+                </CardTitle>
+              </CardHeader>
+
+              <CardContent className="space-y-4">
+                <p className="text-gray-600 text-sm">{project.description}</p>
+
+                {/* Technologies */}
                 {project.technologies.length > 0 && (
-                  <div className="flex flex-wrap gap-2 mb-4">
+                  <div className="flex flex-wrap gap-2">
                     {project.technologies.map((tech, index) => (
                       <Badge
                         key={index}
                         variant="secondary"
-                        className="bg-purple-600 text-white"
+                        className="bg-indigo-600 text-white"
                       >
                         {tech}
                       </Badge>
@@ -98,16 +101,21 @@ export function Projects() {
                   </div>
                 )}
 
-                <div className="flex gap-2">
+                {/* Action buttons */}
+                <div className="flex gap-3 pt-2">
                   {project.liveLink && (
-                    <Button size="sm" asChild>
+                    <Button
+                      size="sm"
+                      className="bg-indigo-600 hover:bg-indigo-700"
+                      asChild
+                    >
                       <a
                         href={project.liveLink}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        <ExternalLink className="h-4 w-4 mr-2" />
-                        Live Demo
+                        <ExternalLink className="h-4 w-4 mr-1" />
+                        Live
                       </a>
                     </Button>
                   )}
@@ -118,7 +126,7 @@ export function Projects() {
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        <Github className="h-4 w-4 mr-2" />
+                        <Github className="h-4 w-4 mr-1" />
                         Code
                       </a>
                     </Button>

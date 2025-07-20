@@ -37,37 +37,37 @@ export function Achievements() {
 
   if (loading) {
     return (
-      <section id="achievements" className="py-20 px-4 bg-slate-800/50">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-white mb-4">
-              Loading Achievements...
-            </h2>
-          </div>
+      <section id="achievements" className="py-20 px-4 bg-white">
+        <div className="max-w-6xl mx-auto text-center">
+          <h2 className="text-3xl font-semibold text-gray-800">
+            Loading Achievements...
+          </h2>
         </div>
       </section>
     );
   }
 
   return (
-    <section id="achievements" className="py-20 px-4 bg-slate-800/50">
+    <section id="achievements" className="py-20 px-4 bg-white">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
-          <Trophy className="h-12 w-12 text-yellow-400 mx-auto mb-4" />
-          <h2 className="text-4xl font-bold text-white mb-4">Achievements</h2>
-          <p className="text-gray-300 text-lg">
+          <Trophy className="h-12 w-12 text-yellow-500 mx-auto mb-4" />
+          <h2 className="text-4xl font-bold text-indigo-700 mb-4">
+            Achievements
+          </h2>
+          <p className="text-gray-600 text-lg">
             Recognition and accomplishments in my journey
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {achievements.map((achievement) => (
             <Card
               key={achievement._id}
-              className="bg-slate-800 border-purple-500/20 hover:border-yellow-500/40 transition-all duration-300"
+              className="border border-gray-200 shadow-md hover:shadow-lg transition-all rounded-xl overflow-hidden"
             >
               {achievement.image && (
-                <div className="aspect-video overflow-hidden rounded-t-lg">
+                <div className="aspect-video overflow-hidden">
                   <OptimizedImage
                     src={achievement.image}
                     alt={achievement.title}
@@ -77,29 +77,38 @@ export function Achievements() {
                   />
                 </div>
               )}
+
               <CardHeader>
-                <CardTitle className="text-white flex items-center gap-2">
-                  <Trophy className="h-5 w-5 text-yellow-400" />
+                <CardTitle className="text-gray-800 text-xl font-semibold flex items-center gap-2">
+                  <Trophy className="h-5 w-5 text-yellow-500" />
                   {achievement.title}
                 </CardTitle>
                 {achievement.date && (
-                  <p className="text-gray-400 text-sm">
+                  <p className="text-sm text-gray-500">
                     {new Date(achievement.date).toLocaleDateString()}
                   </p>
                 )}
               </CardHeader>
-              <CardContent>
-                <p className="text-gray-300 mb-4">{achievement.description}</p>
+
+              <CardContent className="space-y-4">
+                <p className="text-gray-600 text-sm">
+                  {achievement.description}
+                </p>
 
                 {achievement.link && (
-                  <Button size="sm" asChild>
+                  <Button
+                    size="sm"
+                    className="bg-indigo-600 hover:bg-indigo-700"
+                    asChild
+                  >
                     <a
                       href={achievement.link}
                       target="_blank"
                       rel="noopener noreferrer"
+                      className="flex items-center"
                     >
-                      <ExternalLink className="h-4 w-4 mr-2" />
-                      View Certificate
+                      <ExternalLink className="h-4 w-4 mr-1" />
+                      <span className="hidden sm:inline">View Certificate</span>
                     </a>
                   </Button>
                 )}

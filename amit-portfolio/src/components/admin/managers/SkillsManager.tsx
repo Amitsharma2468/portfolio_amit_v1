@@ -72,6 +72,7 @@ export function SkillsManager() {
       level: skill.level,
       category: skill.category,
     });
+    setShowAddForm(true);
   };
 
   const handleDelete = async (id: string) => {
@@ -102,9 +103,9 @@ export function SkillsManager() {
   ];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 bg-white p-6 rounded-lg">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold text-white">Skills Management</h2>
+        <h2 className="text-2xl font-bold text-gray-900">Skills Management</h2>
         <Button
           onClick={() => setShowAddForm(true)}
           className="bg-purple-600 hover:bg-purple-700"
@@ -115,20 +116,20 @@ export function SkillsManager() {
       </div>
 
       {(showAddForm || editingId) && (
-        <Card className="bg-slate-800 border-purple-500/20">
+        <Card className="bg-white border border-gray-300 rounded-lg overflow-visible shadow-sm">
           <CardHeader>
-            <CardTitle className="text-white">
+            <CardTitle className="text-gray-900">
               {editingId ? "Edit Skill" : "Add New Skill"}
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-4 overflow-visible relative z-10">
             <Input
               placeholder="Skill Name"
               value={formData.name}
               onChange={(e) =>
                 setFormData({ ...formData, name: e.target.value })
               }
-              className="bg-slate-700 border-purple-500/20 text-white"
+              className="bg-gray-100 border border-gray-300 text-gray-900"
             />
 
             <Select
@@ -137,12 +138,12 @@ export function SkillsManager() {
                 setFormData({ ...formData, level: value })
               }
             >
-              <SelectTrigger className="bg-slate-700 border-purple-500/20 text-white">
+              <SelectTrigger className="bg-gray-900 border border-gray-700 text-white">
                 <SelectValue placeholder="Select Level" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-gray-900 text-white z-50">
                 {levels.map((level) => (
-                  <SelectItem key={level} value={level}>
+                  <SelectItem key={level} value={level} className="text-white">
                     {level}
                   </SelectItem>
                 ))}
@@ -155,12 +156,16 @@ export function SkillsManager() {
                 setFormData({ ...formData, category: value })
               }
             >
-              <SelectTrigger className="bg-slate-700 border-purple-500/20 text-white">
+              <SelectTrigger className="bg-gray-900 border border-gray-700 text-white">
                 <SelectValue placeholder="Select Category" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-gray-900 text-white z-50">
                 {categories.map((category) => (
-                  <SelectItem key={category} value={category}>
+                  <SelectItem
+                    key={category}
+                    value={category}
+                    className="text-white"
+                  >
                     {category}
                   </SelectItem>
                 ))}
@@ -187,15 +192,19 @@ export function SkillsManager() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {skills.map((skill) => (
-          <Card key={skill._id} className="bg-slate-800 border-purple-500/20">
+          <Card
+            key={skill._id}
+            className="bg-white border border-gray-300 shadow-sm"
+          >
             <CardContent className="p-4">
               <div className="flex justify-between items-start mb-2">
-                <h3 className="font-semibold text-white">{skill.name}</h3>
+                <h3 className="font-semibold text-gray-900">{skill.name}</h3>
                 <div className="flex gap-1">
                   <Button
                     size="sm"
                     variant="ghost"
                     onClick={() => handleEdit(skill)}
+                    className="text-gray-700 hover:text-purple-600"
                   >
                     <Edit className="h-4 w-4" />
                   </Button>
@@ -203,15 +212,19 @@ export function SkillsManager() {
                     size="sm"
                     variant="ghost"
                     onClick={() => handleDelete(skill._id)}
+                    className="text-gray-700 hover:text-red-600"
                   >
                     <Trash2 className="h-4 w-4" />
                   </Button>
                 </div>
               </div>
-              <Badge variant="secondary" className="mb-2">
+              <Badge
+                variant="secondary"
+                className="mb-2 bg-purple-600 text-white"
+              >
                 {skill.level}
               </Badge>
-              <p className="text-sm text-gray-400">{skill.category}</p>
+              <p className="text-sm text-gray-500">{skill.category}</p>
             </CardContent>
           </Card>
         ))}
