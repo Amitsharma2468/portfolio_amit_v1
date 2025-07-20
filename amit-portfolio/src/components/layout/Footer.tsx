@@ -1,6 +1,6 @@
 "use client";
 
-import { Github, Linkedin, Mail, Heart, Code2 } from "lucide-react";
+import { Github, Linkedin, Mail } from "lucide-react";
 
 export function Footer() {
   return (
@@ -9,8 +9,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Brand */}
           <div className="space-y-4">
-            <div className="flex items-center space-x-2">
-              <Code2 className="h-8 w-8 text-purple-400" />
+            <div>
               <span className="text-xl font-bold text-white">
                 Amit Kumar Sharma
               </span>
@@ -65,13 +64,13 @@ export function Footer() {
                 <Mail className="h-6 w-6" />
               </a>
               <a
-                href="#"
+                href="https://github.com/Amitsharma2468"
                 className="text-gray-400 hover:text-purple-400 transition-colors"
               >
                 <Github className="h-6 w-6" />
               </a>
               <a
-                href="#"
+                href="https://www.linkedin.com/in/amit-kumar-sharma-sust/"
                 className="text-gray-400 hover:text-purple-400 transition-colors"
               >
                 <Linkedin className="h-6 w-6" />
@@ -81,10 +80,8 @@ export function Footer() {
         </div>
 
         <div className="border-t border-purple-500/20 mt-8 pt-8 text-center">
-          <p className="text-gray-400 flex items-center justify-center space-x-1">
-            <span>Made with</span>
-            <Heart className="h-4 w-4 text-red-400" />
-            <span>by Amit Kumar Sharma © {new Date().getFullYear()}</span>
+          <p className="text-gray-400">
+            © {new Date().getFullYear()} Amit Kumar Sharma. All rights reserved.
           </p>
         </div>
       </div>

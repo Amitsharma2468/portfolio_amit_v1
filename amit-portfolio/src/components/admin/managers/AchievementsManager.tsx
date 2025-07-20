@@ -87,6 +87,7 @@ export function AchievementsManager() {
       link: achievement.link,
       date: achievement.date ? achievement.date.split("T")[0] : "",
     });
+    setShowAddForm(true);
   };
 
   const handleDelete = async (id: string) => {
@@ -107,14 +108,14 @@ export function AchievementsManager() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 bg-white p-6 rounded-lg shadow-md">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold text-white">
+        <h2 className="text-2xl font-bold text-[#113F67]">
           Achievements Management
         </h2>
         <Button
           onClick={() => setShowAddForm(true)}
-          className="bg-purple-600 hover:bg-purple-700"
+          className="bg-[#113F67] hover:bg-[#0d2c4f] text-white"
         >
           <Plus className="h-4 w-4 mr-2" />
           Add Achievement
@@ -122,9 +123,9 @@ export function AchievementsManager() {
       </div>
 
       {(showAddForm || editingId) && (
-        <Card className="bg-slate-800 border-purple-500/20">
+        <Card className="bg-gray-50 border border-[#113F67] rounded-lg shadow-md">
           <CardHeader>
-            <CardTitle className="text-white">
+            <CardTitle className="text-[#113F67]">
               {editingId ? "Edit Achievement" : "Add New Achievement"}
             </CardTitle>
           </CardHeader>
@@ -135,7 +136,7 @@ export function AchievementsManager() {
               onChange={(e) =>
                 setFormData({ ...formData, title: e.target.value })
               }
-              className="bg-slate-700 border-purple-500/20 text-white"
+              className="bg-white border border-[#113F67] text-[#113F67] placeholder-gray-500"
             />
 
             <Textarea
@@ -144,12 +145,12 @@ export function AchievementsManager() {
               onChange={(e) =>
                 setFormData({ ...formData, description: e.target.value })
               }
-              className="bg-slate-700 border-purple-500/20 text-white"
+              className="bg-white border border-[#113F67] text-[#113F67] placeholder-gray-500"
               rows={3}
             />
 
             <div>
-              <label className="text-sm font-medium text-gray-300 mb-2 block">
+              <label className="text-sm font-medium text-[#113F67] mb-2 block">
                 Achievement Image
               </label>
               <ImageUpload
@@ -164,7 +165,7 @@ export function AchievementsManager() {
               onChange={(e) =>
                 setFormData({ ...formData, link: e.target.value })
               }
-              className="bg-slate-700 border-purple-500/20 text-white"
+              className="bg-white border border-[#113F67] text-[#113F67] placeholder-gray-500"
             />
 
             <Input
@@ -174,19 +175,23 @@ export function AchievementsManager() {
               onChange={(e) =>
                 setFormData({ ...formData, date: e.target.value })
               }
-              className="bg-slate-700 border-purple-500/20 text-white"
+              className="bg-white border border-[#113F67] text-[#113F67] placeholder-gray-500"
             />
 
-            <div className="flex gap-2">
+            <div className="flex gap-3">
               <Button
                 onClick={handleSave}
                 disabled={loading}
-                className="bg-green-600 hover:bg-green-700"
+                className="bg-green-700 hover:bg-green-800 text-white"
               >
                 <Save className="h-4 w-4 mr-2" />
                 {loading ? "Saving..." : "Save"}
               </Button>
-              <Button onClick={handleCancel} variant="outline">
+              <Button
+                onClick={handleCancel}
+                variant="outline"
+                className="border border-[#113F67] text-[#113F67] hover:bg-[#0d2c4f] hover:text-white"
+              >
                 <X className="h-4 w-4 mr-2" />
                 Cancel
               </Button>
@@ -199,11 +204,11 @@ export function AchievementsManager() {
         {achievements.map((achievement) => (
           <Card
             key={achievement._id}
-            className="bg-slate-800 border-purple-500/20"
+            className="bg-gray-50 border border-[#113F67] rounded-lg shadow-md"
           >
             <CardContent className="p-4">
               <div className="flex justify-between items-start mb-2">
-                <h3 className="font-semibold text-white text-lg flex items-center gap-2">
+                <h3 className="font-semibold text-[#113F67] text-lg flex items-center gap-2">
                   <Trophy className="h-5 w-5 text-yellow-400" />
                   {achievement.title}
                 </h3>
@@ -211,6 +216,7 @@ export function AchievementsManager() {
                   <Button
                     size="sm"
                     variant="ghost"
+                    className="text-[#113F67] hover:text-[#0d2c4f]"
                     onClick={() => handleEdit(achievement)}
                   >
                     <Edit className="h-4 w-4" />
@@ -218,6 +224,7 @@ export function AchievementsManager() {
                   <Button
                     size="sm"
                     variant="ghost"
+                    className="text-red-600 hover:text-red-700"
                     onClick={() => handleDelete(achievement._id)}
                   >
                     <Trash2 className="h-4 w-4" />
@@ -226,7 +233,7 @@ export function AchievementsManager() {
               </div>
 
               {achievement.date && (
-                <p className="text-gray-400 text-sm mb-2">
+                <p className="text-gray-700 text-sm mb-2">
                   {new Date(achievement.date).toLocaleDateString()}
                 </p>
               )}
@@ -237,22 +244,27 @@ export function AchievementsManager() {
                   alt={achievement.title}
                   width={400}
                   height={200}
-                  className="w-full h-32 object-cover rounded mb-2"
+                  className="w-full h-32 object-cover rounded mb-3"
                 />
               )}
 
-              <p className="text-sm text-gray-300 mb-3">
+              <p className="text-sm text-gray-700 mb-3">
                 {achievement.description}
               </p>
 
               {achievement.link && (
-                <Button size="sm" asChild>
+                <Button
+                  size="sm"
+                  className="bg-[#113F67] hover:bg-[#0d2c4f] text-white"
+                  asChild
+                >
                   <a
                     href={achievement.link}
                     target="_blank"
                     rel="noopener noreferrer"
+                    className="flex items-center"
                   >
-                    <ExternalLink className="h-3 w-3 mr-1" />
+                    <ExternalLink className="h-4 w-4 mr-1" />
                     View Certificate
                   </a>
                 </Button>

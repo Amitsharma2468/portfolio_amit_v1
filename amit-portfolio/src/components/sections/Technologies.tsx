@@ -1,60 +1,88 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { apiClient } from "@/lib/api";
+import {
+  SiNextdotjs,
+  SiReact,
+  SiReactquery,
+  SiReacttable,
+  SiTailwindcss,
+  SiExpress,
+  SiNodedotjs,
+  SiMongodb,
+  SiMysql,
+  SiPostgresql,
+  SiGithubactions,
+  SiGit,
+  SiFirebase,
+  SiCloudinary,
+  SiJavascript,
+  SiTypescript,
+  SiShadcnui,
+  SiLeaflet,
+  SiVite,
+  SiHtml5,
+  SiCss3,
+} from "react-icons/si";
+import { FaInfinity, FaTools } from "react-icons/fa";
+import { GiMaterialsScience } from "react-icons/gi";
+import { SiSocketdotio } from "react-icons/si";
 
 interface Technology {
-  _id: string;
   name: string;
-  icon: string;
-  category: string;
+  icon: React.ReactNode;
 }
 
+const themeColor = "#113F67";
+
+const technologies: Technology[] = [
+  { name: "Next.js", icon: <SiNextdotjs style={{ color: themeColor }} /> },
+  { name: "React", icon: <SiReact style={{ color: themeColor }} /> },
+  { name: "React Query", icon: <SiReactquery style={{ color: themeColor }} /> },
+  { name: "React Table", icon: <SiReacttable style={{ color: themeColor }} /> },
+  { name: "ShadCN", icon: <SiShadcnui style={{ color: themeColor }} /> },
+  {
+    name: "Tailwind CSS",
+    icon: <SiTailwindcss style={{ color: themeColor }} />,
+  },
+  {
+    name: "Material UI",
+    icon: <GiMaterialsScience style={{ color: themeColor }} />,
+  },
+  { name: "Express.js", icon: <SiExpress style={{ color: themeColor }} /> },
+  { name: "Node.js", icon: <SiNodedotjs style={{ color: themeColor }} /> },
+  { name: "MongoDB", icon: <SiMongodb style={{ color: "#276749" }} /> }, // green
+  { name: "MySQL", icon: <SiMysql style={{ color: "#276749" }} /> }, // green
+  { name: "PostgreSQL", icon: <SiPostgresql style={{ color: "#276749" }} /> }, // green
+  {
+    name: "GitHub Actions",
+    icon: <SiGithubactions style={{ color: themeColor }} />,
+  },
+  { name: "Git", icon: <SiGit style={{ color: themeColor }} /> },
+  { name: "Leaflet", icon: <SiLeaflet style={{ color: themeColor }} /> },
+  { name: "Firebase", icon: <SiFirebase style={{ color: "#F97316" }} /> }, // orange
+  { name: "Cloudinary", icon: <SiCloudinary style={{ color: themeColor }} /> },
+  {
+    name: "Infinite Scroll",
+    icon: <FaInfinity style={{ color: themeColor }} />,
+  },
+  { name: "WebSocket", icon: <SiSocketdotio style={{ color: themeColor }} /> },
+  { name: "JavaScript", icon: <SiJavascript style={{ color: "#F7DF1E" }} /> }, // JS yellow
+  { name: "TypeScript", icon: <SiTypescript style={{ color: themeColor }} /> },
+  { name: "Vite", icon: <SiVite style={{ color: themeColor }} /> },
+  { name: "HTML5", icon: <SiHtml5 style={{ color: "#E34F26" }} /> }, // orange-red
+  { name: "CSS3", icon: <SiCss3 style={{ color: "#1572B6" }} /> }, // blue
+];
+
 export function Technologies() {
-  const [technologies, setTechnologies] = useState<Technology[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchTechnologies = async () => {
-      try {
-        const data = await apiClient.getAll("technologies");
-        setTechnologies(data);
-      } catch (error) {
-        console.error("Error fetching technologies:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchTechnologies();
-  }, []);
-
-  const groupedTechnologies = technologies.reduce((acc, tech) => {
-    if (!acc[tech.category]) {
-      acc[tech.category] = [];
-    }
-    acc[tech.category].push(tech);
-    return acc;
-  }, {} as Record<string, Technology[]>);
-
-  if (loading) {
-    return (
-      <section id="technologies" className="py-20 px-4 bg-white text-center">
-        <h2 className="text-3xl font-semibold text-gray-800">
-          Loading Technologies...
-        </h2>
-      </section>
-    );
-  }
-
   return (
     <section id="technologies" className="py-20 px-4 bg-white">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-indigo-700 mb-4">
-            Technologies & Tools
+          <FaTools className="mx-auto mb-2 text-4xl text-gray-950" />
+          <h2 className="text-4xl font-bold mb-4" style={{ color: themeColor }}>
+            Technologies &amp; Tools
           </h2>
           <p className="text-gray-600 text-lg">
             Technologies and tools I work with
@@ -62,32 +90,21 @@ export function Technologies() {
         </div>
 
         {/* Technologies Grid */}
-        <div className="space-y-12">
-          {Object.entries(groupedTechnologies).map(
-            ([category, categoryTechs]) => (
-              <div key={category}>
-                <h3 className="text-2xl font-semibold text-indigo-600 mb-6 text-center md:text-left">
-                  {category}
-                </h3>
-
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
-                  {categoryTechs.map((tech) => (
-                    <Card
-                      key={tech._id}
-                      className="bg-white border border-gray-200 shadow-sm hover:shadow-md transition duration-300 rounded-xl"
-                    >
-                      <CardContent className="p-5 text-center">
-                        <div className="text-3xl mb-3">{tech.icon}</div>
-                        <p className="text-gray-700 font-medium text-sm">
-                          {tech.name}
-                        </p>
-                      </CardContent>
-                    </Card>
-                  ))}
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
+          {technologies.map((tech) => (
+            <Card
+              key={tech.name}
+              className="bg-white border shadow-sm hover:shadow-md transition duration-300 rounded-xl"
+              style={{ borderColor: themeColor }}
+            >
+              <CardContent className="p-5 text-center">
+                <div className="text-3xl mb-3" style={{ color: themeColor }}>
+                  {tech.icon}
                 </div>
-              </div>
-            )
-          )}
+                <p className="text-gray-700 font-medium text-sm">{tech.name}</p>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       </div>
     </section>

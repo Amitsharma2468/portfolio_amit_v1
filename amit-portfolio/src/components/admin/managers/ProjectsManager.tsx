@@ -100,6 +100,7 @@ export function ProjectsManager() {
       codeLink: project.codeLink,
       technologies: project.technologies.join(", "),
     });
+    setShowAddForm(true);
   };
 
   const handleDelete = async (id: string) => {
@@ -127,12 +128,14 @@ export function ProjectsManager() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 bg-white p-6 rounded-lg shadow-md">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold text-white">Projects Management</h2>
+        <h2 className="text-2xl font-bold text-[#113F67]">
+          Projects Management
+        </h2>
         <Button
           onClick={() => setShowAddForm(true)}
-          className="bg-purple-600 hover:bg-purple-700"
+          className="bg-[#113F67] hover:bg-[#0d2c4f] text-white"
         >
           <Plus className="h-4 w-4 mr-2" />
           Add Project
@@ -140,9 +143,9 @@ export function ProjectsManager() {
       </div>
 
       {(showAddForm || editingId) && (
-        <Card className="bg-slate-800 border-purple-500/20">
+        <Card className="bg-gray-50 border border-[#113F67] rounded-lg shadow-md">
           <CardHeader>
-            <CardTitle className="text-white">
+            <CardTitle className="text-[#113F67]">
               {editingId ? "Edit Project" : "Add New Project"}
             </CardTitle>
           </CardHeader>
@@ -153,7 +156,7 @@ export function ProjectsManager() {
               onChange={(e) =>
                 setFormData({ ...formData, title: e.target.value })
               }
-              className="bg-slate-700 border-purple-500/20 text-white"
+              className="bg-white border border-[#113F67] text-[#113F67] placeholder-gray-500"
             />
 
             <Textarea
@@ -162,12 +165,12 @@ export function ProjectsManager() {
               onChange={(e) =>
                 setFormData({ ...formData, description: e.target.value })
               }
-              className="bg-slate-700 border-purple-500/20 text-white"
+              className="bg-white border border-[#113F67] text-[#113F67] placeholder-gray-500"
               rows={3}
             />
 
             <div>
-              <label className="text-sm font-medium text-gray-300 mb-2 block">
+              <label className="text-sm font-medium text-[#113F67] mb-2 block">
                 Project Image
               </label>
               <ImageUpload
@@ -182,7 +185,7 @@ export function ProjectsManager() {
               onChange={(e) =>
                 setFormData({ ...formData, liveLink: e.target.value })
               }
-              className="bg-slate-700 border-purple-500/20 text-white"
+              className="bg-white border border-[#113F67] text-[#113F67] placeholder-gray-500"
             />
 
             <Input
@@ -191,7 +194,7 @@ export function ProjectsManager() {
               onChange={(e) =>
                 setFormData({ ...formData, codeLink: e.target.value })
               }
-              className="bg-slate-700 border-purple-500/20 text-white"
+              className="bg-white border border-[#113F67] text-[#113F67] placeholder-gray-500"
             />
 
             <Input
@@ -200,19 +203,23 @@ export function ProjectsManager() {
               onChange={(e) =>
                 setFormData({ ...formData, technologies: e.target.value })
               }
-              className="bg-slate-700 border-purple-500/20 text-white"
+              className="bg-white border border-[#113F67] text-[#113F67] placeholder-gray-500"
             />
 
-            <div className="flex gap-2">
+            <div className="flex gap-3">
               <Button
                 onClick={handleSave}
                 disabled={loading}
-                className="bg-green-600 hover:bg-green-700"
+                className="bg-green-700 hover:bg-green-800 text-white"
               >
                 <Save className="h-4 w-4 mr-2" />
                 {loading ? "Saving..." : "Save"}
               </Button>
-              <Button onClick={handleCancel} variant="outline">
+              <Button
+                onClick={handleCancel}
+                variant="outline"
+                className="border border-[#113F67] text-[#113F67] hover:bg-[#0d2c4f] hover:text-white"
+              >
                 <X className="h-4 w-4 mr-2" />
                 Cancel
               </Button>
@@ -223,16 +230,20 @@ export function ProjectsManager() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {projects.map((project) => (
-          <Card key={project._id} className="bg-slate-800 border-purple-500/20">
+          <Card
+            key={project._id}
+            className="bg-gray-50 border border-[#113F67] rounded-lg shadow-md"
+          >
             <CardContent className="p-4">
               <div className="flex justify-between items-start mb-2">
-                <h3 className="font-semibold text-white text-lg">
+                <h3 className="font-semibold text-[#113F67] text-lg">
                   {project.title}
                 </h3>
                 <div className="flex gap-1">
                   <Button
                     size="sm"
                     variant="ghost"
+                    className="text-[#113F67] hover:text-[#0d2c4f]"
                     onClick={() => handleEdit(project)}
                   >
                     <Edit className="h-4 w-4" />
@@ -240,6 +251,7 @@ export function ProjectsManager() {
                   <Button
                     size="sm"
                     variant="ghost"
+                    className="text-red-600 hover:text-red-700"
                     onClick={() => handleDelete(project._id)}
                   >
                     <Trash2 className="h-4 w-4" />
@@ -253,43 +265,58 @@ export function ProjectsManager() {
                   alt={project.title}
                   width={400}
                   height={200}
-                  className="w-full h-32 object-cover rounded mb-2"
+                  className="w-full h-32 object-cover rounded mb-3"
                 />
               )}
 
-              <p className="text-sm text-gray-300 mb-3">
+              <p className="text-sm text-gray-700 mb-3">
                 {project.description}
               </p>
 
-              <div className="flex flex-wrap gap-1 mb-3">
+              <div className="flex flex-wrap gap-2 mb-3">
                 {project.technologies.map((tech, index) => (
-                  <Badge key={index} variant="secondary" className="text-xs">
+                  <Badge
+                    key={index}
+                    variant="secondary"
+                    className="bg-[#113F67] text-white text-xs"
+                  >
                     {tech}
                   </Badge>
                 ))}
               </div>
 
-              <div className="flex gap-2">
+              <div className="flex gap-3">
                 {project.liveLink && (
-                  <Button size="sm" asChild>
+                  <Button
+                    size="sm"
+                    className="bg-[#113F67] hover:bg-[#0d2c4f] text-white"
+                    asChild
+                  >
                     <a
                       href={project.liveLink}
                       target="_blank"
                       rel="noopener noreferrer"
+                      className="flex items-center"
                     >
-                      <ExternalLink className="h-3 w-3 mr-1" />
+                      <ExternalLink className="h-4 w-4 mr-1" />
                       Live
                     </a>
                   </Button>
                 )}
                 {project.codeLink && (
-                  <Button size="sm" variant="outline" asChild>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="border-[#113F67] text-[#113F67] hover:bg-[#0d2c4f] hover:text-white"
+                    asChild
+                  >
                     <a
                       href={project.codeLink}
                       target="_blank"
                       rel="noopener noreferrer"
+                      className="flex items-center"
                     >
-                      <Github className="h-3 w-3 mr-1" />
+                      <Github className="h-4 w-4 mr-1" />
                       Code
                     </a>
                   </Button>

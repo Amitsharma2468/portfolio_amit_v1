@@ -49,61 +49,47 @@ export function Contact() {
 
   return (
     <section id="contact" className="py-20 px-4 bg-white">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
-          <Mail className="h-12 w-12 text-indigo-700 mx-auto mb-4" />
-          <h2 className="text-4xl font-bold text-indigo-700 mb-4">
+          <Mail className="h-12 w-12 text-gray-950 mx-auto mb-4" />
+          <h2 className="text-4xl font-bold text-[#113F67] mb-4">
             Get In Touch
           </h2>
-          <p className="text-gray-600 text-lg max-w-xl mx-auto">
-            Let&#39;s discuss opportunities and collaborations
+          <p className="text-gray-700 text-lg max-w-xl mx-auto">
+            Let us discuss opportunities and collaborations
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
           {/* Contact Information */}
-          <div className="space-y-6">
-            <Card className="border border-gray-200 shadow-md rounded-xl">
-              <CardHeader>
-                <CardTitle className="text-gray-800">
-                  Contact Information
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex items-center space-x-3">
-                  <Mail className="h-5 w-5 text-indigo-700" />
-                  <span className="text-gray-700">
-                    amitkmrsharma292@gmail.com
-                  </span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <MapPin className="h-5 w-5 text-indigo-700" />
-                  <span className="text-gray-700">
-                    Shahjalal University of Science and Technology, Sylhet
-                  </span>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="border border-gray-200 shadow-md rounded-xl">
-              <CardHeader>
-                <CardTitle className="text-gray-800">About Me</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-700">
-                  I&#39;m a passionate Software Engineering student at SUST,
-                  always eager to learn new technologies and work on challenging
-                  projects. I love solving complex problems and building
-                  innovative solutions.
-                </p>
-              </CardContent>
-            </Card>
-          </div>
+          <Card className="border-4 border-[#113F67] shadow-md rounded-xl">
+            <CardHeader>
+              <CardTitle className="text-[#113F67]">
+                Contact Information
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="flex items-center space-x-3">
+                <Mail className="h-5 w-5 text-gray-950" />
+                <span className="text-gray-800">
+                  amitkmrsharma292@gmail.com
+                </span>
+              </div>
+              <div className="flex items-center space-x-3">
+                <MapPin className="h-5 w-5 text-gray-950" />
+                <span className="text-gray-800">
+                  Shahjalal University of Science and Technology, Sylhet
+                </span>
+              </div>
+            </CardContent>
+          </Card>
 
           {/* Contact Form */}
-          <Card className="border border-gray-200 shadow-md rounded-xl">
+          <Card className="border-4 border-[#113F67] shadow-md rounded-xl">
             <CardHeader>
-              <CardTitle className="text-gray-800">Send Me a Message</CardTitle>
+              <CardTitle className="text-[#113F67]">
+                Send Me a Message
+              </CardTitle>
             </CardHeader>
             <CardContent>
               {success ? (
@@ -111,19 +97,19 @@ export function Contact() {
                   <div className="text-green-600 text-lg mb-2">
                     Message Sent Successfully!
                   </div>
-                  <p className="text-gray-700">
-                    Thank you for reaching out. I&#39;ll get back to you soon.
+                  <p className="text-gray-800">
+                    Thank you for reaching out. I will get back to you soon.
                   </p>
                   <Button
                     onClick={() => setSuccess(false)}
-                    className="mt-4 border border-indigo-700 text-indigo-700 hover:bg-indigo-50"
+                    className="mt-4 border border-[#113F67] text-[#113F67] hover:bg-[#e0e7ff]"
                     variant="outline"
                   >
                     Send Another Message
                   </Button>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-6">
                   <Input
                     type="text"
                     name="name"
@@ -131,7 +117,7 @@ export function Contact() {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="bg-white border border-gray-300 text-gray-800 placeholder-gray-400"
+                    className="bg-white border border-[#113F67] text-gray-900 placeholder-gray-400"
                   />
                   <Input
                     type="email"
@@ -140,7 +126,7 @@ export function Contact() {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="bg-white border border-gray-300 text-gray-800 placeholder-gray-400"
+                    className="bg-white border border-[#113F67] text-gray-900 placeholder-gray-400"
                   />
                   <Textarea
                     name="message"
@@ -149,14 +135,14 @@ export function Contact() {
                     onChange={handleChange}
                     required
                     rows={5}
-                    className="bg-white border border-gray-300 text-gray-800 placeholder-gray-400"
+                    className="bg-white border border-[#113F67] text-gray-900 placeholder-gray-400"
                   />
 
                   {error && <div className="text-red-600 text-sm">{error}</div>}
 
                   <Button
                     type="submit"
-                    className="w-full bg-indigo-600 hover:bg-indigo-700"
+                    className="w-full bg-[#113F67] hover:bg-[#0d2c4f] text-white flex items-center justify-center"
                     disabled={loading}
                   >
                     {loading ? (

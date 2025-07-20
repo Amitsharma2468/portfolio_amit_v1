@@ -3,20 +3,10 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  LogOut,
-  Users,
-  Briefcase,
-  Award,
-  Code,
-  MessageSquare,
-  Settings,
-} from "lucide-react";
-import { SkillsManager } from "./managers/SkillsManager";
-import { TechnologiesManager } from "./managers/TechnologiesManager";
+import { LogOut, Briefcase, Award, MessageSquare } from "lucide-react";
+
 import { ProjectsManager } from "./managers/ProjectsManager";
 import { AchievementsManager } from "./managers/AchievementsManager";
-import { ProblemSolvingManager } from "./managers/ProblemSolvingManager";
 import { ContactManager } from "./managers/ContactManager";
 
 interface AdminDashboardProps {
@@ -24,101 +14,77 @@ interface AdminDashboardProps {
 }
 
 export function AdminDashboard({ onLogout }: AdminDashboardProps) {
-  const [activeTab, setActiveTab] = useState("skills");
+  const [activeTab, setActiveTab] = useState("projects");
 
   return (
     <div className="min-h-screen bg-white">
-      <header className="border-b border-gray-300 bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <header className="border-b border-[#113F67] bg-white shadow-md">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
           <div className="flex items-center justify-between h-16">
-            <h1 className="text-2xl font-bold text-indigo-700">
+            <h1 className="text-3xl font-extrabold text-[#113F67] tracking-tight">
               Admin Dashboard
             </h1>
             <Button
               onClick={onLogout}
               variant="outline"
               size="sm"
-              className="text-indigo-700 border-indigo-700 hover:bg-indigo-100"
+              className="text-[#113F67] border-[#113F67] hover:bg-[#e0e7ff]"
             >
-              <LogOut className="h-4 w-4 mr-2" />
+              <LogOut className="h-5 w-5 mr-2" />
               Logout
             </Button>
           </div>
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 py-10">
         <Tabs
           value={activeTab}
           onValueChange={setActiveTab}
-          className="space-y-6"
+          className="space-y-8"
         >
-          <TabsList className="grid w-full grid-cols-6 border border-indigo-300 bg-indigo-50 rounded-lg">
-            <TabsTrigger
-              value="skills"
-              className="data-[state=active]:bg-indigo-600 data-[state=active]:text-white"
-            >
-              <Users className="h-4 w-4 mr-2" />
-              Skills
-            </TabsTrigger>
-            <TabsTrigger
-              value="technologies"
-              className="data-[state=active]:bg-indigo-600 data-[state=active]:text-white"
-            >
-              <Settings className="h-4 w-4 mr-2" />
-              Technologies
-            </TabsTrigger>
+          <TabsList className="grid w-full grid-cols-3 border border-[#113F67] bg-[#f0f4ff] rounded-lg shadow-sm">
             <TabsTrigger
               value="projects"
-              className="data-[state=active]:bg-indigo-600 data-[state=active]:text-white"
+              className="data-[state=active]:bg-[#113F67] data-[state=active]:text-white font-semibold"
             >
-              <Briefcase className="h-4 w-4 mr-2" />
+              <Briefcase className="h-5 w-5 mr-2" />
               Projects
             </TabsTrigger>
             <TabsTrigger
               value="achievements"
-              className="data-[state=active]:bg-indigo-600 data-[state=active]:text-white"
+              className="data-[state=active]:bg-[#113F67] data-[state=active]:text-white font-semibold"
             >
-              <Award className="h-4 w-4 mr-2" />
+              <Award className="h-5 w-5 mr-2" />
               Achievements
             </TabsTrigger>
             <TabsTrigger
-              value="problem-solving"
-              className="data-[state=active]:bg-indigo-600 data-[state=active]:text-white"
-            >
-              <Code className="h-4 w-4 mr-2" />
-              Problem Solving
-            </TabsTrigger>
-            <TabsTrigger
               value="contacts"
-              className="data-[state=active]:bg-indigo-600 data-[state=active]:text-white"
+              className="data-[state=active]:bg-[#113F67] data-[state=active]:text-white font-semibold"
             >
-              <MessageSquare className="h-4 w-4 mr-2" />
+              <MessageSquare className="h-5 w-5 mr-2" />
               Contacts
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="skills">
-            <SkillsManager />
-          </TabsContent>
-
-          <TabsContent value="technologies">
-            <TechnologiesManager />
-          </TabsContent>
-
-          <TabsContent value="projects">
+          <TabsContent
+            value="projects"
+            className="bg-white rounded-lg shadow p-6"
+          >
             <ProjectsManager />
           </TabsContent>
 
-          <TabsContent value="achievements">
+          <TabsContent
+            value="achievements"
+            className="bg-white rounded-lg shadow p-6"
+          >
             <AchievementsManager />
           </TabsContent>
 
-          <TabsContent value="problem-solving">
-            <ProblemSolvingManager />
-          </TabsContent>
-
-          <TabsContent value="contacts">
+          <TabsContent
+            value="contacts"
+            className="bg-white rounded-lg shadow p-6"
+          >
             <ContactManager />
           </TabsContent>
         </Tabs>

@@ -51,8 +51,8 @@ export function Achievements() {
     <section id="achievements" className="py-20 px-4 bg-white">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
-          <Trophy className="h-12 w-12 text-yellow-500 mx-auto mb-4" />
-          <h2 className="text-4xl font-bold text-indigo-700 mb-4">
+          <Trophy className="mx-auto mb-2 text-4xl text-gray-950" />
+          <h2 className="text-4xl font-bold text-[#113F67] mb-4">
             Achievements
           </h2>
           <p className="text-gray-600 text-lg">
@@ -64,23 +64,23 @@ export function Achievements() {
           {achievements.map((achievement) => (
             <Card
               key={achievement._id}
-              className="border border-gray-200 shadow-md hover:shadow-lg transition-all rounded-xl overflow-hidden"
+              className="border-4 border-[#113F67] shadow-md hover:shadow-lg transition-all rounded-xl overflow-hidden"
             >
               {achievement.image && (
-                <div className="aspect-video overflow-hidden">
+                <div className="aspect-video overflow-hidden mt-4 mx-4 rounded-lg">
                   <OptimizedImage
                     src={achievement.image}
                     alt={achievement.title}
                     width={600}
                     height={400}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-300 rounded-lg"
                   />
                 </div>
               )}
 
-              <CardHeader>
-                <CardTitle className="text-gray-800 text-xl font-semibold flex items-center gap-2">
-                  <Trophy className="h-5 w-5 text-yellow-500" />
+              <CardHeader className="pt-4 px-6">
+                <CardTitle className="text-[#113F67] text-xl font-semibold flex items-center gap-2">
+                  <Trophy className="h-5 w-5 text-gray-950" />
                   {achievement.title}
                 </CardTitle>
                 {achievement.date && (
@@ -90,15 +90,15 @@ export function Achievements() {
                 )}
               </CardHeader>
 
-              <CardContent className="space-y-4">
-                <p className="text-gray-600 text-sm">
+              <CardContent className="space-y-4 px-6 pb-6">
+                <p className="text-gray-800 text-sm">
                   {achievement.description}
                 </p>
 
                 {achievement.link && (
                   <Button
                     size="sm"
-                    className="bg-indigo-600 hover:bg-indigo-700"
+                    className="bg-[#113F67] hover:bg-indigo-900 text-white"
                     asChild
                   >
                     <a

@@ -7,7 +7,6 @@ require('dotenv').config();
 
 const app = express();
 
-// Middleware
 app.use(cors());
 app.use(express.json());
 
@@ -20,25 +19,13 @@ mongoose.connect(process.env.MONGO_URI, {
 .catch((err) => console.error('MongoDB connection error:', err));
 
 // Models
-const skillSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  level: { type: String, required: true },
-  category: { type: String, required: true }
-}, { timestamps: true });
-
-const technologySchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  icon: String,
-  category: { type: String, required: true }
-}, { timestamps: true });
-
 const projectSchema = new mongoose.Schema({
   title: { type: String, required: true },
   description: { type: String, required: true },
   image: String,
   liveLink: String,
   codeLink: String,
-  technologies: [String]
+  technologies: [String],
 }, { timestamps: true });
 
 const achievementSchema = new mongoose.Schema({
@@ -46,14 +33,7 @@ const achievementSchema = new mongoose.Schema({
   description: { type: String, required: true },
   image: String,
   link: String,
-  date: Date
-}, { timestamps: true });
-
-const problemSolvingSchema = new mongoose.Schema({
-  title: { type: String, required: true },
-  description: { type: String, required: true },
-  link: String,
-  platform: String
+  date: Date,
 }, { timestamps: true });
 
 const contactSchema = new mongoose.Schema({
@@ -68,11 +48,8 @@ const adminSchema = new mongoose.Schema({
   password: { type: String, required: true }
 }, { timestamps: true });
 
-const Skill = mongoose.model('Skill', skillSchema);
-const Technology = mongoose.model('Technology', technologySchema);
 const Project = mongoose.model('Project', projectSchema);
 const Achievement = mongoose.model('Achievement', achievementSchema);
-const ProblemSolving = mongoose.model('ProblemSolving', problemSolvingSchema);
 const Contact = mongoose.model('Contact', contactSchema);
 const Admin = mongoose.model('Admin', adminSchema);
 
@@ -83,7 +60,7 @@ const auth = async (req, res, next) => {
     if (!token) {
       return res.status(401).json({ message: 'No token provided' });
     }
-    
+
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.admin = decoded;
     next();
@@ -92,27 +69,28 @@ const auth = async (req, res, next) => {
   }
 };
 
-// Admin routes
+// Admin login
 app.post('/api/admin/login', async (req, res) => {
   try {
     const { email, password } = req.body;
-    
+
     if (email !== process.env.ADMIN_EMAIL) {
       return res.status(401).json({ message: 'Unauthorized email' });
     }
-    
+
     let admin = await Admin.findOne({ email });
+
     if (!admin) {
-      const hashedPassword = await bcryptjs.hash(password, 10);
+      const hashedPassword = await bcryptjs.hash('htens20@', 10);
       admin = new Admin({ email, password: hashedPassword });
       await admin.save();
     }
-    
+
     const isValid = await bcryptjs.compare(password, admin.password);
     if (!isValid) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
-    
+
     const token = jwt.sign({ id: admin._id, email: admin.email }, process.env.JWT_SECRET);
     res.json({ token, admin: { email: admin.email } });
   } catch (error) {
@@ -120,9 +98,8 @@ app.post('/api/admin/login', async (req, res) => {
   }
 });
 
-// CRUD routes for each model
+// CRUD helper
 const createCRUDRoutes = (model, routeName) => {
-  // Get all
   app.get(`/api/${routeName}`, async (req, res) => {
     try {
       const items = await model.find().sort({ createdAt: -1 });
@@ -132,7 +109,6 @@ const createCRUDRoutes = (model, routeName) => {
     }
   });
 
-  // Create
   app.post(`/api/${routeName}`, auth, async (req, res) => {
     try {
       const item = new model(req.body);
@@ -143,7 +119,6 @@ const createCRUDRoutes = (model, routeName) => {
     }
   });
 
-  // Update
   app.put(`/api/${routeName}/:id`, auth, async (req, res) => {
     try {
       const item = await model.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -156,7 +131,6 @@ const createCRUDRoutes = (model, routeName) => {
     }
   });
 
-  // Delete
   app.delete(`/api/${routeName}/:id`, auth, async (req, res) => {
     try {
       const item = await model.findByIdAndDelete(req.params.id);
@@ -170,11 +144,9 @@ const createCRUDRoutes = (model, routeName) => {
   });
 };
 
-createCRUDRoutes(Skill, 'skills');
-createCRUDRoutes(Technology, 'technologies');
+// Enabled Models Only
 createCRUDRoutes(Project, 'projects');
 createCRUDRoutes(Achievement, 'achievements');
-createCRUDRoutes(ProblemSolving, 'problem-solving');
 
 // Contact routes
 app.post('/api/contact', async (req, res) => {

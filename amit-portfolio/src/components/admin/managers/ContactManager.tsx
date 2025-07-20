@@ -87,7 +87,7 @@ export function ContactManager() {
 
       <div className="space-y-4">
         {contacts.length === 0 ? (
-          <Card className="bg-slate-800 border-purple-500/20">
+          <Card className="bg-white border border-gray-300 shadow-sm">
             <CardContent className="p-8 text-center">
               <Mail className="h-12 w-12 text-gray-400 mx-auto mb-4" />
               <p className="text-gray-400">No contact messages yet.</p>
@@ -97,14 +97,14 @@ export function ContactManager() {
           contacts.map((contact) => (
             <Card
               key={contact._id}
-              className={`bg-slate-800 border-purple-500/20 ${
+              className={`bg-white border border-gray-300 shadow-sm ${
                 contact.status === "unread" ? "ring-2 ring-yellow-500/30" : ""
               }`}
             >
               <CardHeader>
                 <div className="flex justify-between items-start">
                   <div>
-                    <CardTitle className="text-white flex items-center gap-2">
+                    <CardTitle className="text-gray-900 flex items-center gap-2">
                       <Mail className="h-5 w-5" />
                       {contact.name}
                       {contact.status === "unread" && (
@@ -116,7 +116,7 @@ export function ContactManager() {
                         </Badge>
                       )}
                     </CardTitle>
-                    <p className="text-gray-400 text-sm">{contact.email}</p>
+                    <p className="text-gray-600 text-sm">{contact.email}</p>
                     <p className="text-gray-500 text-xs">
                       {new Date(contact.createdAt).toLocaleString()}
                     </p>
@@ -152,15 +152,25 @@ export function ContactManager() {
                 </div>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-300 whitespace-pre-wrap">
+                <p className="text-gray-800 whitespace-pre-wrap">
                   {contact.message}
                 </p>
                 <div className="mt-4">
-                  <Button size="sm" asChild>
+                  <Button
+                    size="sm"
+                    className="bg-[#113F67] hover:bg-[#0d2c4f] text-white"
+                    asChild
+                  >
                     <a
-                      href={`mailto:${contact.email}?subject=Re: Contact from Portfolio`}
+                      href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
+                        contact.email
+                      )}&su=${encodeURIComponent(
+                        "Re: Contact from Portfolio"
+                      )}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
-                      Reply via Email
+                      Reply via Gmail
                     </a>
                   </Button>
                 </div>

@@ -25,7 +25,6 @@ class ApiClient {
   }
 
   private async request(endpoint: string, options: RequestInit = {}) {
-    // Add `/api` prefix inside the request method
     const url = `${API_BASE_URL}/api${endpoint}`;
 
     const headers: HeadersInit = {
@@ -45,11 +44,22 @@ class ApiClient {
     });
 
     if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.message || "API request failed");
+      // Try to parse error message, fallback to generic
+      let errorMessage = "API request failed";
+      try {
+        const errorData = await response.json();
+        errorMessage = errorData.message || errorMessage;
+      } catch {
+        // Ignore JSON parse errors
+      }
+      throw new Error(errorMessage);
     }
 
-    return response.json();
+    // If response has content, parse json, otherwise return null
+    if (response.status !== 204) {
+      return response.json();
+    }
+    return null;
   }
 
   // Auth methods

@@ -33,7 +33,7 @@ export default function AdminLogin() {
       if (error instanceof Error) {
         setError(error.message);
       } else {
-        setError("An unknown error occurred");
+        setError("Login failed. Please try again.");
       }
     } finally {
       setLoading(false);
@@ -52,10 +52,10 @@ export default function AdminLogin() {
   }
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center p-4">
-      <Card className="w-full max-w-md border border-gray-200 shadow-md rounded-xl">
+    <div className="min-h-screen bg-[#0D1117] flex items-center justify-center p-4">
+      <Card className="w-full max-w-md border border-gray-700 shadow-lg bg-[#161B22] text-white rounded-xl">
         <CardHeader>
-          <CardTitle className="text-2xl text-center text-indigo-700">
+          <CardTitle className="text-2xl text-center text-white">
             Admin Login
           </CardTitle>
         </CardHeader>
@@ -67,7 +67,7 @@ export default function AdminLogin() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="bg-white border border-gray-300 text-gray-800 placeholder-gray-400"
+              className="bg-[#0D1117] border border-gray-600 text-white placeholder-gray-400"
             />
             <Input
               type="password"
@@ -75,14 +75,14 @@ export default function AdminLogin() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="bg-white border border-gray-300 text-gray-800 placeholder-gray-400"
+              className="bg-[#0D1117] border border-gray-600 text-white placeholder-gray-400"
             />
             {error && (
-              <div className="text-red-600 text-sm text-center">{error}</div>
+              <div className="text-red-500 text-sm text-center">{error}</div>
             )}
             <Button
               type="submit"
-              className="w-full bg-indigo-600 hover:bg-indigo-700"
+              className="w-full bg-indigo-600 hover:bg-indigo-700 text-white"
               disabled={loading}
             >
               {loading ? "Logging in..." : "Login"}
