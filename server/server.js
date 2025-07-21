@@ -102,7 +102,7 @@ app.post('/api/admin/login', async (req, res) => {
 const createCRUDRoutes = (model, routeName) => {
   app.get(`/api/${routeName}`, async (req, res) => {
     try {
-      const items = await model.find().sort({ createdAt: -1 });
+      const items = await model.find().sort({ createdAt: 1 });
       res.json(items);
     } catch (error) {
       res.status(500).json({ message: 'Server error', error: error.message });

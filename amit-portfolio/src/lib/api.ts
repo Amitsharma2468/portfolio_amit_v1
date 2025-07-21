@@ -1,5 +1,5 @@
 const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL || "http://192.168.0.107:5000";
+  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000";
 
 class ApiClient {
   private token: string | null = null;
@@ -27,42 +27,49 @@ class ApiClient {
   private async request(endpoint: string, options: RequestInit = {}) {
     const url = `${API_BASE_URL}/api${endpoint}`;
 
-    const headers: HeadersInit = {
+    const headers: Record<string, string> = {
       "Content-Type": "application/json",
-      ...options.headers,
+      ...(options.headers as Record<string, string>),
     };
 
     if (this.token) {
-      (headers as Record<string, string>)[
-        "Authorization"
-      ] = `Bearer ${this.token}`;
+      headers["Authorization"] = `Bearer ${this.token}`;
     }
 
-    const response = await fetch(url, {
-      ...options,
-      headers,
-    });
+    // Debug log
+    console.log("➡️ Fetching:", url);
+    console.log("➡️ With headers:", headers);
+    if (options.body) {
+      console.log("➡️ With body:", options.body);
+    }
 
-    if (!response.ok) {
-      // Try to parse error message, fallback to generic
-      let errorMessage = "API request failed";
-      try {
-        const errorData = await response.json();
-        errorMessage = errorData.message || errorMessage;
-      } catch {
-        // Ignore JSON parse errors
+    try {
+      const response = await fetch(url, {
+        ...options,
+        headers,
+      });
+
+      if (!response.ok) {
+        let errorMessage = "API request failed";
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.message || errorMessage;
+        } catch (e) {
+          console.error("❌ Failed to parse error body", e);
+        }
+        throw new Error(errorMessage);
       }
-      throw new Error(errorMessage);
-    }
 
-    // If response has content, parse json, otherwise return null
-    if (response.status !== 204) {
-      return response.json();
+      if (response.status !== 204) {
+        return response.json();
+      }
+      return null;
+    } catch (error) {
+      console.error("❌ Fetch error:", error);
+      throw error;
     }
-    return null;
   }
 
-  // Auth methods
   async login(email: string, password: string) {
     const data = await this.request("/admin/login", {
       method: "POST",
@@ -72,7 +79,6 @@ class ApiClient {
     return data;
   }
 
-  // Generic CRUD methods
   async getAll(resource: string) {
     return this.request(`/${resource}`);
   }
@@ -97,7 +103,6 @@ class ApiClient {
     });
   }
 
-  // Contact methods
   async sendContact(data: { name: string; email: string; message: string }) {
     return this.request("/contact", {
       method: "POST",
