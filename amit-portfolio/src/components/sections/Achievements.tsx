@@ -108,7 +108,7 @@ export function Achievements() {
                       className="flex items-center"
                     >
                       <ExternalLink className="h-4 w-4 mr-1" />
-                      <span className="hidden sm:inline">View Certificate</span>
+                      <span className="hidden sm:inline">View</span>
                     </a>
                   </Button>
                 )}

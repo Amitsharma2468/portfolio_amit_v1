@@ -27,6 +27,7 @@ import {
 import { FaInfinity, FaTools } from "react-icons/fa";
 import { GiMaterialsScience } from "react-icons/gi";
 import { SiSocketdotio } from "react-icons/si";
+import { motion } from "framer-motion";
 
 interface Technology {
   name: string;
@@ -51,28 +52,43 @@ const technologies: Technology[] = [
   },
   { name: "Express.js", icon: <SiExpress style={{ color: themeColor }} /> },
   { name: "Node.js", icon: <SiNodedotjs style={{ color: themeColor }} /> },
-  { name: "MongoDB", icon: <SiMongodb style={{ color: "#276749" }} /> }, // green
-  { name: "MySQL", icon: <SiMysql style={{ color: "#276749" }} /> }, // green
-  { name: "PostgreSQL", icon: <SiPostgresql style={{ color: "#276749" }} /> }, // green
+  { name: "MongoDB", icon: <SiMongodb style={{ color: "#276749" }} /> },
+  { name: "MySQL", icon: <SiMysql style={{ color: "#276749" }} /> },
+  { name: "PostgreSQL", icon: <SiPostgresql style={{ color: "#276749" }} /> },
   {
     name: "GitHub Actions",
     icon: <SiGithubactions style={{ color: themeColor }} />,
   },
   { name: "Git", icon: <SiGit style={{ color: themeColor }} /> },
   { name: "Leaflet", icon: <SiLeaflet style={{ color: themeColor }} /> },
-  { name: "Firebase", icon: <SiFirebase style={{ color: "#F97316" }} /> }, // orange
+  { name: "Firebase", icon: <SiFirebase style={{ color: "#F97316" }} /> },
   { name: "Cloudinary", icon: <SiCloudinary style={{ color: themeColor }} /> },
   {
     name: "Infinite Scroll",
     icon: <FaInfinity style={{ color: themeColor }} />,
   },
   { name: "WebSocket", icon: <SiSocketdotio style={{ color: themeColor }} /> },
-  { name: "JavaScript", icon: <SiJavascript style={{ color: "#F7DF1E" }} /> }, // JS yellow
+  { name: "JavaScript", icon: <SiJavascript style={{ color: "#F7DF1E" }} /> },
   { name: "TypeScript", icon: <SiTypescript style={{ color: themeColor }} /> },
   { name: "Vite", icon: <SiVite style={{ color: themeColor }} /> },
-  { name: "HTML5", icon: <SiHtml5 style={{ color: "#E34F26" }} /> }, // orange-red
-  { name: "CSS3", icon: <SiCss3 style={{ color: "#1572B6" }} /> }, // blue
+  { name: "HTML5", icon: <SiHtml5 style={{ color: "#E34F26" }} /> },
+  { name: "CSS3", icon: <SiCss3 style={{ color: "#1572B6" }} /> },
 ];
+
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.08,
+    },
+  },
+};
+
+const item = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0 },
+};
 
 export function Technologies() {
   return (
@@ -89,23 +105,32 @@ export function Technologies() {
           </p>
         </div>
 
-        {/* Technologies Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
+        {/* Technologies Grid with Motion */}
+        <motion.div
+          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6"
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true }}
+        >
           {technologies.map((tech) => (
-            <Card
-              key={tech.name}
-              className="bg-white border shadow-sm hover:shadow-md transition duration-300 rounded-xl"
-              style={{ borderColor: themeColor }}
-            >
-              <CardContent className="p-5 text-center flex flex-col items-center">
-                <div className="text-3xl mb-3" style={{ color: themeColor }}>
-                  {tech.icon}
-                </div>
-                <p className="text-gray-700 font-medium text-sm">{tech.name}</p>
-              </CardContent>
-            </Card>
+            <motion.div key={tech.name} variants={item}>
+              <Card
+                className="bg-white border shadow-sm hover:shadow-md transition duration-300 rounded-xl"
+                style={{ borderColor: themeColor }}
+              >
+                <CardContent className="p-5 text-center flex flex-col items-center">
+                  <div className="text-3xl mb-3" style={{ color: themeColor }}>
+                    {tech.icon}
+                  </div>
+                  <p className="text-gray-700 font-medium text-sm">
+                    {tech.name}
+                  </p>
+                </CardContent>
+              </Card>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

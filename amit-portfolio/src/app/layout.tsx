@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: "Amit Kumar Sharma",
   description: "Passionate MERN Stack Developer",
   icons: {
-    icon: "/boy-cartoon-icon.png", // Make sure this file exists in your public directory
+    icon: "boy-cartoon-icon.png",
   },
 };
 
