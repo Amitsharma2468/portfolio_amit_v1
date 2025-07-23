@@ -97,7 +97,7 @@ export function Technologies() {
               className="bg-white border shadow-sm hover:shadow-md transition duration-300 rounded-xl"
               style={{ borderColor: themeColor }}
             >
-              <CardContent className="p-5 text-center">
+              <CardContent className="p-5 text-center flex flex-col items-center">
                 <div className="text-3xl mb-3" style={{ color: themeColor }}>
                   {tech.icon}
                 </div>
