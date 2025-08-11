@@ -69,7 +69,7 @@ export function Hero() {
           transition={{ duration: 0.6 }}
         >
           {/* CV Download Button */}
-          <a href="/amitkumarsharma-mern.pdf" download className="w-max">
+          <a href="/Amit Kumar Sharma.pdf" download className="w-max">
             <Button
               size="lg"
               className="bg-[#113F67] hover:bg-[#0e2f55] text-white flex items-center"
