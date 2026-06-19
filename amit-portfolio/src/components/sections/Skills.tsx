@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, CardContent } from "@/components/ui/card";
-import { SiJavascript, SiPython, SiCplusplus, SiMysql } from "react-icons/si";
+import { SiJavascript, SiPython, SiCplusplus, SiMysql, SiSharp } from "react-icons/si";
 import { DiJava } from "react-icons/di";
 import { AiFillEdit } from "react-icons/ai";
 
@@ -9,12 +9,12 @@ const themeColor = "#113F67";
 
 const languages = [
   {
-    name: "TypeScript",
-    icon: <SiJavascript className="h-6 w-6" style={{ color: themeColor }} />,
-  },
-  {
     name: "JavaScript",
     icon: <SiJavascript className="h-6 w-6 text-yellow-500" />,
+  },
+    {
+    name: "c#",
+    icon: <SiSharp className="h-6 w-6" style={{ color: themeColor }} />,
   },
   {
     name: "C++",
