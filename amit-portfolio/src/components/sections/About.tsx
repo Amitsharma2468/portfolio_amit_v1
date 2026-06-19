@@ -10,6 +10,28 @@ const stats = [
   { icon: GraduationCap, label: "CGPA", value: "3.48" },
 ];
 
+// Single source of truth for the stagger animation.
+// The parent fires ONE viewport observer; children just react to the
+// parent's state via variants instead of running their own observers.
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.08,
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 8 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.3 },
+  },
+};
+
 export function About() {
   return (
     <section
@@ -33,10 +55,11 @@ export function About() {
         {/* Stats */}
         <motion.div
           className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.3 }}
+          style={{ willChange: "opacity" }}
         >
           {stats.map((stat, i) => (
             <motion.div
@@ -54,13 +77,8 @@ export function About() {
                 py-5
                 min-h-[120px]
               "
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{
-                duration: 0.3,
-                delay: i * 0.05,
-              }}
+              variants={cardVariants}
+              style={{ willChange: "opacity, transform" }}
             >
               <stat.icon
                 className="w-5 h-5 text-[#113F67]"
@@ -91,10 +109,11 @@ export function About() {
           "
           initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, amount: 0.3 }}
           transition={{
             duration: 0.5,
           }}
+          style={{ willChange: "opacity, transform" }}
         >
 
           <p className="text-gray-700 leading-relaxed">
